@@ -1,0 +1,224 @@
+## multi langauge website CSS code
+``` CSS
+<!DOCTYPE html>
+<html lang="en"><head><link rel="canonical" href="https://phppot.com/demo/multi-language-support-to-website-using-php/" />
+<TITLE>Demo Multi-language Support to Website using PHP</TITLE>
+<link rel="prev" href="https://phppot.com/php/multi-language-support-to-website-using-php/" />
+<style>
+.language-header{
+	height:50px;
+	border-bottom:#3d6371 2px solid;
+}
+.demo-page-title{
+	float: left;
+    padding: 10px;
+    color: #3d6371;
+    font-size: 1.5em;
+}
+.language-link{
+	text-align:right;
+	padding-top: 15px;
+	padding-right: 15px;
+	color: #6aa8bf;
+}
+.language-link-item {
+	text-decoration:none;
+	color: #6aa8bf;
+	cursor:pointer;
+}
+.current-lang {
+	color:#ff9900;
+}
+.demo-row-data{
+	padding-top:20px;
+	border-bottom:1px solid #e0e0e0;
+}
+.demo-row-description{
+	color:#777;
+	padding-top:5px;
+}
+.no-result {
+	color:#FF0000;
+	text-align:center;
+	padding:30px;
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="https://phppot.com/favicon.ico"
+    type="image/x-icon">
+<link rel="stylesheet" id="solandra-style-css"
+    href="./../../wp-content/themes/solandra/style.css"
+    type="text/css" media="all">
+<style>
+#demo-content {
+    padding: 0px 0px 100px 0px;
+}
+
+#demo-content table.tutorial-table {
+    table-layout: auto;
+}
+
+.tutorial-back a {
+    background:#09f;
+    padding: 10px 10px 10px 20px;
+    margin: 20px 40px 20px 0;
+    color: #fff;
+    display: inline-block;
+    width: 155px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    position:relative;
+}
+
+
+
+.tutorial-back a:before {
+    background: url(https://phppot.com/wp-content/themes/solandra/images/sprite.png) no-repeat 0px 0px;
+    height: 24px;
+    width: 24px;
+    display: inline-flex;
+    content: '';
+    position:absolute;
+    top: 10px;
+    left: 15px;
+}
+
+.tutorial-back a:hover {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.50);
+}
+</style><script async src="https://www.googletagmanager.com/gtag/js?id=UA-40067115-1"></script
+```
+## CSS code of loading the content in english and germany respectively
+``` css
+<script>
+	function changeLanguage(lang) {
+		document.getElementById("lang-en").style.color = "";
+		document.getElementById("lang-de").style.color = "";
+		document.getElementById("lang-"+lang).style.color = "#ff9900";
+		if(lang=='en') {
+			document.getElementById("demo-page-title").innerHTML = "Popular Tutorial";
+			document.getElementById("lang-html-data").innerHTML = '<div class="demo-row-data">'+
+			'<div><strong>Example Content</strong></div> '+
+			'<p class="demo-row-description">It was popularised in the 1960s with the release of Letraset sheets containing passages, and more recently with desktop publishing software like Aldus PageMaker including versions		</p>'+
+		'</div>'+
+			'<div class="demo-row-data">'+
+			'<div><strong>Usage Example </strong></div> '+
+			'<p class="demo-row-description">The standard chunk of used since the 1500s is reproduced below for those interested. Also reproduced in their exact original form		</p>'+
+		'</div>';
+		} else if(lang=='de') {
+			document.getElementById("demo-page-title").innerHTML = "Populair Zelfstudie";
+			document.getElementById("lang-html-data").innerHTML = '<div class="demo-row-data">'+
+			'<div><strong>Beispiel Inhalt</strong></div> '+
+			'<p class="demo-row-description">Bekannt wurde es 1960, mit dem erscheinen von "Letraset", welches Passagen von enhielt, so wie Desktop Software wie ebenfalls mit</p>'+
+		'</div>'+
+			'<div class="demo-row-data">'+
+			'<div><strong>Anwendungsbeispiel</strong></div> '+
+			'<p class="demo-row-description">Der Standardteil von, genutzt seit 1500, ist reproduziert f&#252;r die, die es interessiert abgeleitet von der Englischen Version aus		</p>'+
+		'</div>';
+		}
+	}
+	</script>
+  ```
+  ```php
+  <?php
+namespace Phppot;
+
+use \Phppot\DataSource;
+
+class NewsLetter
+{
+
+    private $ds;
+
+    function __construct()
+    {
+        require_once __DIR__ . './../lib/DataSource.php';
+        $this->ds = new DataSource();
+    }
+
+    public function getAllRecords()
+    {
+        $query = 'select * from tbl_newsletter';
+        $result = $this->ds->select($query);
+        return $result;
+    }
+}
+```
+
+This is a generic datasource library.i created this class to handle database operations.
+this class includes functions to perform the `database CRUD operations`.
+
+The below code shows the code snippet from datasource.
+
+**Example**
+```PHP
+<?php
+namespace phppot
+/**
+ * generic datasource class for handling DB opertaions
+ * use MYSQL and prepared statements
+ */
+class daatasource
+{
+    // when using above 7.1.0,declare the below constant as private
+    const HOST ='localhost' ;
+    const USERNAME ='root';
+    const PASSWORD ='test' ;
+    const DATABASENAME ='blog_samples' ;
+    private $conn;
+   /**
+    * PHP takes care of cleanup for default connection types
+    *singletons not required in PHP as there is no
+    *every object lives for a request
+     */
+    function __construct()
+    {
+        $this->conn =$this->getconnection();
+
+    }
+/**
+ * if connection object is needed use this method and get access to it
+ * otherwise,use the below methods for insert / update / etc
+ */
+public function getconnection()
+{
+    $conn =new /mysqli(self::HOST::USERNAME,self::PASSWORD, self::DATABASENAME);
+    if (mysqli_connect_errno()){
+        trigger_error("problem with connecting to database.");
+    }
+    $conn->set_charset("utf8");
+    return $conn;
+}
+/**
+ * to get database results
+ * @param string $query
+ * @param string $paramtype
+ * @param array $paramarray
+ * @return array
+ */
+public function select($query,$paramtype ="", $paramarray = array())
+{
+    $stmt =$this->conn->prepare($query);
+    if (! empty($paramType) && ! empty($paramArray)) {
+        $this->bindQueryParams($stmt, $paramType, $paramArray);
+
+        $stmt->execute();
+        $result = $stmt->get_result();  
+
+        if ($result->num_rows > 0){
+            while ($row = $results->fetch_assoc(){
+                $resultset[] =$row;
+            )}
+        }
+        if (! empty($resultset)){
+            return $resultset;
+      }  }
+
+}
+  ```
+  
+
